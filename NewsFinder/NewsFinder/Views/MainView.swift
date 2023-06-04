@@ -8,16 +8,13 @@
 import SwiftUI
 
 struct MainView: View {
+    
     let filters = ["Filter 1", "Filter 2", "Filter 3", "Filter 4", "Filter 5"]
     
-    let newsItems = [
-        NewsItem(image: "news1", title: "News 1", author: "Author 1", source: "Source 1"),
-        NewsItem(image: "news2", title: "News 2", author: "Author 2", source: "Source 2"),
-        NewsItem(image: "news3", title: "News 3", author: "Author 3", source: "Source 3"),
-        NewsItem(image: "news4", title: "News 4", author: "Author 4", source: "Source 4"),
-        NewsItem(image: "news5", title: "News 5", author: "Author 5", source: "Source 5")
-    ]
+    @State var articles: [Article] = []
     
+//    @State var images: [Image?] = []
+
     var body: some View {
         VStack {
             ZStack {
@@ -50,31 +47,95 @@ struct MainView: View {
             }
             .frame(height: 50)
             
-            List(newsItems) { item in
+            List(Array(articles.enumerated()), id: \.element.id) { (index, article) in
                 HStack() {
-                    Image(item.image)
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(height: 100)
                     
+//                    if let image = images[index] {
+//                        image
+//                            .resizable()
+//                            .aspectRatio(contentMode: .fit)
+//                            .frame(height: 100)
+//                    } else {
+//                        Rectangle()
+//                            .foregroundColor(.gray)
+//                            .frame(height: 100)
+//                    }
+
                     VStack(alignment: .leading) {
-                        Text(item.title)
+                        Text(article.title)
                             .font(.headline)
                             .padding(.vertical, 4)
-                        
-                        Text("Author: \(item.author)")
+
+                        Text("Author: \(article.author ?? "NA")")
                             .font(.subheadline)
                             .foregroundColor(.gray)
-                        
-                        Text("Source: \(item.source)")
+
+                        Text("Source: \(article.source.name ?? "NA")")
                             .font(.subheadline)
                             .foregroundColor(.gray)
                     }
                 }
             }
+
+        }
+        .onAppear {
+            fetchArticles()
         }
     }
+    
+    
+    private func fetchArticles() {
+        NewsItemLoader.shared.fetchArticles(category: "business") { result in
+            switch result {
+            case .success(let Response):
+                
+                self.articles = Response.articles
+                
+                for article in articles {
+                    self.loadImages(article.urlToImage)
+                }
+
+//                for article in articles {
+                    // debugging function
+//                    print("Hello: \(article.title)")
+//                    break
+//                }
+                
+            case .failure(let error):
+                print("Error: \(error)")
+            }
+        }
+
+    }
+    
+    private func loadImages(_ urlString: String?) {
+        guard let string = urlString else {
+            return
+        }
+        guard let url = URL(string: string) else {
+            return
+        }
+        
+        DispatchQueue.global().async {
+            if let data = try? Data(contentsOf: url),
+               let uiImage = UIImage(data: data) {
+                DispatchQueue.main.async {
+                    //TODO: add images to the view ..
+                    
+                    
+                    
+                }
+            }
+        }
+    }
+    
+    
+
 }
+
+
+
+
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
