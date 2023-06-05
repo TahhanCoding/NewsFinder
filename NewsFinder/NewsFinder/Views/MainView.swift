@@ -8,10 +8,11 @@
 import SwiftUI
 
 struct MainView: View {
-    
-    let filters = ["Filter 1", "Filter 2", "Filter 3", "Filter 4", "Filter 5"]
+
+    let filters = ["All", "Business", "Entertainment", "General", "Health", "Science", "Sports", "Technology"]
     
     @State private var articles: [Article] = []
+    @State private var filter = "Business"
     
     var body: some View {
         VStack {
@@ -30,7 +31,7 @@ struct MainView: View {
                 HStack {
                     ForEach(filters, id: \.self) { filter in
                         Button(action: {
-                            print("Tapped filter: \(filter)")
+                            self.filter = filter
                         }) {
                             Text(filter)
                                 .font(.footnote)
@@ -71,23 +72,43 @@ struct MainView: View {
             }
         }
         .onAppear {
-            loadArticles()
+            loadArticles(filter)
         }
+        .onChange(of: filter) { _ in
+            loadArticles(filter)
+        }
+        
     }
     
     
     // MARK: - MainView Methods
-    private func loadArticles() {
-        NewsItemLoader.shared.fetchArticles(category: "business") { result in
-            switch result {
-            case .success(let Response):
-                articles = Response.articles
-            case .failure(let error):
-                print("Error: \(error)")
+    private func loadArticles(_ filter: String) {
+        if filter == "All" {
+            articles.removeAll()
+            let filters = filters.dropFirst()
+            for filter in filters {
+                NewsItemLoader.shared.fetchArticles(category: filter) { result in
+                    switch result {
+                    case .success(let Response):
+                        articles.append(contentsOf: Response.articles)
+                    case .failure(let error):
+                        print("Error: \(error)")
+                    }
+                }
+            }
+        } else {
+            NewsItemLoader.shared.fetchArticles(category: filter) { result in
+                switch result {
+                case .success(let Response):
+                    articles = Response.articles
+                case .failure(let error):
+                    print("Error: \(error)")
+                }
             }
         }
     }
 }
+
 
 
 
