@@ -21,8 +21,9 @@ class NewsItemLoader {
         return "\(baseURL)?apiKey=\(apiKey)&country=\(country)&page=\(page)&category=\(category)"
     }
 
-    func fetchArticles(category: String, completion: @escaping (Result<Response, Error>) -> Void) {
+    func fetchArticles(page: Int, category: String, completion: @escaping (Result<Response, Error>) -> Void) {
         
+        self.page = page
         self.category = category
         
         AF.request(apiURL).responseDecodable(of: Response.self) { response in
