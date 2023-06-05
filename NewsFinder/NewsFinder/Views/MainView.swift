@@ -11,10 +11,8 @@ struct MainView: View {
     
     let filters = ["Filter 1", "Filter 2", "Filter 3", "Filter 4", "Filter 5"]
     
-    @State var articles: [Article] = []
+    @State private var articles: [Article] = []
     
-//    @State var images: [Image?] = []
-
     var body: some View {
         VStack {
             ZStack {
@@ -27,6 +25,7 @@ struct MainView: View {
                     .padding()
             }
 
+            // MARK: - Filters
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack {
                     ForEach(filters, id: \.self) { filter in
@@ -47,19 +46,13 @@ struct MainView: View {
             }
             .frame(height: 50)
             
-            List(Array(articles.enumerated()), id: \.element.id) { (index, article) in
+            // MARK: - List of Articles
+            List(articles, id: \.id) { article in
                 HStack() {
-                    
-//                    if let image = images[index] {
-//                        image
-//                            .resizable()
-//                            .aspectRatio(contentMode: .fit)
-//                            .frame(height: 100)
-//                    } else {
-//                        Rectangle()
-//                            .foregroundColor(.gray)
-//                            .frame(height: 100)
-//                    }
+                    RemoteImage(url: URL(string: article.urlToImage ?? "")) {
+                        ProgressView()
+                    }
+                    .frame(width: 100, height: 100)
 
                     VStack(alignment: .leading) {
                         Text(article.title)
@@ -76,63 +69,25 @@ struct MainView: View {
                     }
                 }
             }
-
         }
         .onAppear {
-            fetchArticles()
+            loadArticles()
         }
     }
     
     
-    private func fetchArticles() {
+    // MARK: - MainView Methods
+    private func loadArticles() {
         NewsItemLoader.shared.fetchArticles(category: "business") { result in
             switch result {
             case .success(let Response):
-                
-                self.articles = Response.articles
-                
-                for article in articles {
-                    self.loadImages(article.urlToImage)
-                }
-
-//                for article in articles {
-                    // debugging function
-//                    print("Hello: \(article.title)")
-//                    break
-//                }
-                
+                articles = Response.articles
             case .failure(let error):
                 print("Error: \(error)")
             }
         }
-
     }
-    
-    private func loadImages(_ urlString: String?) {
-        guard let string = urlString else {
-            return
-        }
-        guard let url = URL(string: string) else {
-            return
-        }
-        
-        DispatchQueue.global().async {
-            if let data = try? Data(contentsOf: url),
-               let uiImage = UIImage(data: data) {
-                DispatchQueue.main.async {
-                    //TODO: add images to the view ..
-                    
-                    
-                    
-                }
-            }
-        }
-    }
-    
-    
-
 }
-
 
 
 
@@ -142,3 +97,8 @@ struct ContentView_Previews: PreviewProvider {
         MainView()
     }
 }
+
+
+
+
+

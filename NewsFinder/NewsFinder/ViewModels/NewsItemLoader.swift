@@ -6,7 +6,6 @@
 //
 
 import Alamofire
-import Foundation
 
 class NewsItemLoader {
     

@@ -12,6 +12,8 @@
 		326188D82A2CC53500493508 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 326188D72A2CC53500493508 /* Assets.xcassets */; };
 		326188DB2A2CC53500493508 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 326188DA2A2CC53500493508 /* Preview Assets.xcassets */; };
 		3266F0C52A2CE7120083B28B /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3266F0C42A2CE7120083B28B /* Response.swift */; };
+		32B2B8BB2A2D47B400796372 /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32B2B8BA2A2D47B400796372 /* ImageLoader.swift */; };
+		32B2B8BD2A2D4A6500796372 /* RemoteImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32B2B8BC2A2D4A6500796372 /* RemoteImage.swift */; };
 		32CFAC242A2CF2AD00462CE2 /* NewsItemLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32CFAC232A2CF2AD00462CE2 /* NewsItemLoader.swift */; };
 		B73265BAC95DE59BC2383393 /* Pods_NewsFinder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55E8E0D09EF30DF990A16599 /* Pods_NewsFinder.framework */; };
 /* End PBXBuildFile section */
@@ -24,6 +26,8 @@
 		326188D72A2CC53500493508 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		326188DA2A2CC53500493508 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		3266F0C42A2CE7120083B28B /* Response.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Response.swift; sourceTree = "<group>"; };
+		32B2B8BA2A2D47B400796372 /* ImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
+		32B2B8BC2A2D4A6500796372 /* RemoteImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteImage.swift; sourceTree = "<group>"; };
 		32CFAC232A2CF2AD00462CE2 /* NewsItemLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsItemLoader.swift; sourceTree = "<group>"; };
 		55E8E0D09EF30DF990A16599 /* Pods_NewsFinder.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NewsFinder.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA0B2B23ECF0221C2595BD03 /* Pods-NewsFinder.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NewsFinder.release.xcconfig"; path = "Target Support Files/Pods-NewsFinder/Pods-NewsFinder.release.xcconfig"; sourceTree = "<group>"; };
@@ -84,6 +88,7 @@
 			isa = PBXGroup;
 			children = (
 				326188D52A2CC53400493508 /* MainView.swift */,
+				32B2B8BC2A2D4A6500796372 /* RemoteImage.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -100,6 +105,7 @@
 			isa = PBXGroup;
 			children = (
 				32CFAC232A2CF2AD00462CE2 /* NewsItemLoader.swift */,
+				32B2B8BA2A2D47B400796372 /* ImageLoader.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -237,6 +243,8 @@
 			files = (
 				326188D62A2CC53400493508 /* MainView.swift in Sources */,
 				3266F0C52A2CE7120083B28B /* Response.swift in Sources */,
+				32B2B8BB2A2D47B400796372 /* ImageLoader.swift in Sources */,
+				32B2B8BD2A2D4A6500796372 /* RemoteImage.swift in Sources */,
 				32CFAC242A2CF2AD00462CE2 /* NewsItemLoader.swift in Sources */,
 				326188D42A2CC53400493508 /* NewsFinderApp.swift in Sources */,
 			);
