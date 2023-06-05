@@ -83,24 +83,18 @@ struct MainView: View {
     
     // MARK: - MainView Methods
     private func loadArticles(_ filter: String) {
+        var filtersToApply: [String] = []
         if filter == "All" {
-            articles.removeAll()
-            let filters = filters.dropFirst()
-            for filter in filters {
-                NewsItemLoader.shared.fetchArticles(category: filter) { result in
-                    switch result {
-                    case .success(let Response):
-                        articles.append(contentsOf: Response.articles)
-                    case .failure(let error):
-                        print("Error: \(error)")
-                    }
-                }
-            }
+            filtersToApply = Array(filters[1...])
         } else {
+            filtersToApply.append(filter)
+        }
+        articles.removeAll()
+        for filter in filtersToApply {
             NewsItemLoader.shared.fetchArticles(category: filter) { result in
                 switch result {
                 case .success(let Response):
-                    articles = Response.articles
+                    articles.append(contentsOf: Response.articles)
                 case .failure(let error):
                     print("Error: \(error)")
                 }
