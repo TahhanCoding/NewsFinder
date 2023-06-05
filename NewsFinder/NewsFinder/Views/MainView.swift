@@ -12,7 +12,7 @@ struct MainView: View {
     let filters = ["All", "Business", "Entertainment", "General", "Health", "Science", "Sports", "Technology"]
     
     @State private var articles: [Article] = []
-    @State private var filter = "Business"
+    @State private var filter = "All"
     
     var body: some View {
         VStack {
@@ -50,6 +50,7 @@ struct MainView: View {
             // MARK: - List of Articles
             List(articles, id: \.id) { article in
                 HStack() {
+                    // This is like AsyncImage() Introduced in iOS15, The Task requires iOS13 and above.
                     RemoteImage(url: URL(string: article.urlToImage ?? "")) {
                         ProgressView()
                     }
