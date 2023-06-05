@@ -84,6 +84,10 @@ struct MainView: View {
                             .foregroundColor(.gray)
                     }
                 }
+                .padding()
+                .background(Color.white)
+                .cornerRadius(15)
+                .shadow(color: Color.black.opacity(0.1), radius: 4, x: 0, y: 2)
             }
         }
         .onAppear {
