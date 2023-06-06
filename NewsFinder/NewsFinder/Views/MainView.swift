@@ -9,9 +9,8 @@ import SwiftUI
 
 struct MainView: View {
 
-    let filters = ["All", "Business", "Entertainment", "General", "Health", "Science", "Sports", "Technology"]
-    
-    @State var filtersToApply: [String] = []
+    private let filters = ["All", "Business", "Entertainment", "General", "Health", "Science", "Sports", "Technology"]
+    @State private var filtersToApply: [String] = ["Business", "Entertainment", "General", "Health", "Science", "Sports", "Technology"]
     @State private var articles: [Article] = []
     @State private var filter = "All"
     @State private var scrolledToEnd = false
@@ -91,7 +90,6 @@ struct MainView: View {
             }
         }
         .onAppear {
-            changeFilter()
             loadArticles()
         }
         .onChange(of: filter) { _ in
