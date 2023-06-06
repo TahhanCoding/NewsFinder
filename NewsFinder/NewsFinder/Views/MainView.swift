@@ -57,7 +57,7 @@ struct MainView: View {
                 List(articles, id: \.id) { article in
                     
                     ZStack {
-                        NavigationLink(destination: ArticleView()) { EmptyView() }.opacity(0.0)
+                        NavigationLink(destination: ArticleView(article: article)) { EmptyView() }.opacity(0.0)
                         
                         HStack() {
                             // This is like AsyncImage() Introduced in iOS15, The Task requires iOS13 and above.
