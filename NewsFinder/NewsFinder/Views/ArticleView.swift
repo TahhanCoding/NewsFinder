@@ -14,7 +14,7 @@ struct ArticleView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
             RemoteImage(url: URL(string: article.urlToImage ?? "")) {
-                ProgressView()
+                LoadingView()
             }
             .frame(height: 200)
             

@@ -62,7 +62,7 @@ struct MainView: View {
                         HStack() {
                             // This is like AsyncImage() Introduced in iOS15, The Task requires iOS13 and above.
                             RemoteImage(url: URL(string: article.urlToImage ?? "")) {
-                                ProgressView()
+                                LoadingView()
                             }
                             .frame(width: 100, height: 100)
                             
@@ -102,11 +102,11 @@ struct MainView: View {
         .onAppear {
             loadArticles()
         }
-        .onChange(of: filter) { _ in
+        .onchange(value: filter) { _ in
             changeFilter()
             loadArticles()
         }
-        .onChange(of: scrolledToEnd) { _ in
+        .onchange(value: scrolledToEnd) { _ in
             if scrolledToEnd {
                 page += 1
                 loadArticles()

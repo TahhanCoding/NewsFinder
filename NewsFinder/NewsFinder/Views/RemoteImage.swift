@@ -8,12 +8,12 @@
 import SwiftUI
 
 struct RemoteImage<Placeholder: View>: View {
-    @StateObject private var imageLoader: ImageLoader
+    @ObservedObject private var imageLoader: ImageLoader
     private let placeholder: Placeholder
     
     init(url: URL?, @ViewBuilder placeholder: () -> Placeholder) {
         self.placeholder = placeholder()
-        _imageLoader = StateObject(wrappedValue: ImageLoader(url: url))
+        _imageLoader = ObservedObject(wrappedValue: ImageLoader(url: url))
     }
     
     var body: some View {

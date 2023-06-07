@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		320B78052A302DAB00F37A46 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 320B78042A302DAB00F37A46 /* Extensions.swift */; };
+		320B78082A30319F00F37A46 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 320B78072A30319F00F37A46 /* LoadingView.swift */; };
 		326188D42A2CC53400493508 /* NewsFinderApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 326188D32A2CC53400493508 /* NewsFinderApp.swift */; };
 		326188D62A2CC53400493508 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 326188D52A2CC53400493508 /* MainView.swift */; };
 		326188D82A2CC53500493508 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 326188D72A2CC53500493508 /* Assets.xcassets */; };
@@ -21,6 +23,9 @@
 
 /* Begin PBXFileReference section */
 		01E111692C691F63692116A7 /* Pods-NewsFinder.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NewsFinder.debug.xcconfig"; path = "Target Support Files/Pods-NewsFinder/Pods-NewsFinder.debug.xcconfig"; sourceTree = "<group>"; };
+		320B78032A3028BB00F37A46 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		320B78042A302DAB00F37A46 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		320B78072A30319F00F37A46 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		326188D02A2CC53400493508 /* NewsFinder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NewsFinder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		326188D32A2CC53400493508 /* NewsFinderApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsFinderApp.swift; sourceTree = "<group>"; };
 		326188D52A2CC53400493508 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
@@ -47,6 +52,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		320B78062A302ECF00F37A46 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				320B78042A302DAB00F37A46 /* Extensions.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		326188C72A2CC53400493508 = {
 			isa = PBXGroup;
 			children = (
@@ -68,11 +81,13 @@
 		326188D22A2CC53400493508 /* NewsFinder */ = {
 			isa = PBXGroup;
 			children = (
+				320B78032A3028BB00F37A46 /* Info.plist */,
 				326188D32A2CC53400493508 /* NewsFinderApp.swift */,
 				3266F0C22A2CD5210083B28B /* Models */,
 				3266F0C12A2CD5150083B28B /* Views */,
 				3266F0C32A2CD5280083B28B /* ViewModels */,
 				326188D72A2CC53500493508 /* Assets.xcassets */,
+				320B78062A302ECF00F37A46 /* Extensions */,
 				326188D92A2CC53500493508 /* Preview Content */,
 			);
 			path = NewsFinder;
@@ -92,6 +107,7 @@
 				326188D52A2CC53400493508 /* MainView.swift */,
 				32B2B8BC2A2D4A6500796372 /* RemoteImage.swift */,
 				32B2B8D82A2EBB5000796372 /* ArticleView.swift */,
+				320B78072A30319F00F37A46 /* LoadingView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -249,8 +265,10 @@
 				32B2B8BB2A2D47B400796372 /* ImageLoader.swift in Sources */,
 				32B2B8BD2A2D4A6500796372 /* RemoteImage.swift in Sources */,
 				32CFAC242A2CF2AD00462CE2 /* NewsItemLoader.swift in Sources */,
+				320B78052A302DAB00F37A46 /* Extensions.swift in Sources */,
 				32B2B8D92A2EBB5000796372 /* ArticleView.swift in Sources */,
 				326188D42A2CC53400493508 /* NewsFinderApp.swift in Sources */,
+				320B78082A30319F00F37A46 /* LoadingView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -383,12 +401,12 @@
 				DEVELOPMENT_TEAM = V92LW66S55;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_FILE = NewsFinder/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -414,12 +432,12 @@
 				DEVELOPMENT_TEAM = V92LW66S55;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_FILE = NewsFinder/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
