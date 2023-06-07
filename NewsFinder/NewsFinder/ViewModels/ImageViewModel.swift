@@ -1,5 +1,5 @@
 //
-//  ImageLoader.swift
+//  ImageViewModel.swift
 //  NewsFinder
 //
 //  Created by Ahmed Shaban on 05/06/2023.
@@ -7,7 +7,7 @@
 
 import Alamofire
 
-class ImageLoader: ObservableObject {
+class ImageViewModel: ObservableObject {
     @Published var image: UIImage?
     private let url: URL?
     

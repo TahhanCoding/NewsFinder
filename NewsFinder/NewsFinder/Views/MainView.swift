@@ -8,14 +8,16 @@
 import SwiftUI
 
 struct MainView: View {
+    
+    @ObservedObject private var viewModel = ArticleViewModel()
 
     private let filters = ["All", "Business", "Entertainment", "General", "Health", "Science", "Sports", "Technology"]
-    @State private var filtersToApply: [String] = ["Business", "Entertainment", "General", "Health", "Science", "Sports", "Technology"]
+    
     @State private var articles: [Article] = []
-    @State private var filter = "All"
-    @State private var scrolledToEnd = false
     @State private var page = 1
-
+    @State private var scrolledToEnd = false
+    @State private var filter = "All"
+    
     var body: some View {
         NavigationView {
         VStack {
@@ -31,7 +33,7 @@ struct MainView: View {
                 // MARK: - Filters
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack {
-                        ForEach(filters, id: \.self) { filter in
+                        ForEach(filters, id:\.self) { filter in
                             Button(action: {
                                 self.filter = filter
                             }) {
@@ -48,6 +50,7 @@ struct MainView: View {
                                     .stroke(Color.blue, lineWidth: 1)
                             )
                         }
+                        
                     }
                     .padding()
                 }
@@ -73,8 +76,6 @@ struct MainView: View {
                                     .onAppear {
                                         if article.title == articles.last?.title {
                                             scrolledToEnd = true
-                                            // Filter Debugger messages using "Hello"
-                                            print("Hello: number of articles is \(articles.count)")
                                         }
                                     }
                                 
@@ -92,24 +93,19 @@ struct MainView: View {
                         .cornerRadius(15)
                         .shadow(color: Color.black.opacity(0.1), radius: 4, x: 0, y: 2)
                     }
-                        
-                    
                 }
-
             }
-            
         }
         .onAppear {
             loadArticles()
         }
         .onchange(value: filter) { _ in
             changeFilter()
-            loadArticles()
         }
         .onchange(value: scrolledToEnd) { _ in
             if scrolledToEnd {
                 page += 1
-                loadArticles()
+                loadNextPage()
                 scrolledToEnd.toggle()
             }
         }
@@ -117,34 +113,38 @@ struct MainView: View {
     
     
     // MARK: - MainView Methods
+    private func changeFilter() {
+        page = 1
+        if filter == "All" {
+            self.articles = Array(viewModel.allArticles.values.flatMap { $0 })
+        } else if let articles = viewModel.allArticles[filter] {
+            self.articles = articles
+        }
+    }
     private func loadArticles() {
-        for filter in filtersToApply {
-            NewsItemLoader.shared.fetchArticles(page: page, category: filter) { result in
-                switch result {
-                case .success(let Response):
-                    articles.append(contentsOf: Response.articles)
-                case .failure(let error):
-                    print("Error: \(error)")
-                }
+        viewModel.fetchArticles(page: page)
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+            self.articles = Array(viewModel.allArticles.values.flatMap { $0 })
+        }
+        
+    }
+
+    private func loadNextPage() {
+        if filter == "All" {
+            viewModel.fetchArticles(page: page)
+            self.articles.append(contentsOf: Array(viewModel.allArticles.values.flatMap { $0 }))
+        } else {
+            // load new page for the current filter only
+            viewModel.fetchNextPage(page: page, filter: filter)
+            
+            if let articles = viewModel.allArticles[filter] {
+                let range = self.articles.count - 1..<articles.count
+                self.articles.append(contentsOf: articles[range])
+                
             }
         }
     }
-    private func changeFilter() {
-        // reset pages counter when changing filter
-        page = 1
-        
-        if filter == "All" {
-            filtersToApply = Array(filters[1...])
-        } else {
-            filtersToApply.removeAll()
-            filtersToApply.append(filter)
-        }
-        
-        articles.removeAll()
-    }
-
-
-
 }
 
 

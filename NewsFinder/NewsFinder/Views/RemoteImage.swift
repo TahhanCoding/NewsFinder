@@ -8,17 +8,17 @@
 import SwiftUI
 
 struct RemoteImage<Placeholder: View>: View {
-    @ObservedObject private var imageLoader: ImageLoader
+    @ObservedObject private var imageViewModel: ImageViewModel
     private let placeholder: Placeholder
     
     init(url: URL?, @ViewBuilder placeholder: () -> Placeholder) {
         self.placeholder = placeholder()
-        _imageLoader = ObservedObject(wrappedValue: ImageLoader(url: url))
+        _imageViewModel = ObservedObject(wrappedValue: ImageViewModel(url: url))
     }
     
     var body: some View {
         Group {
-            if let image = imageLoader.image {
+            if let image = imageViewModel.image {
                 Image(uiImage: image)
                     .resizable()
                     .scaledToFit()
@@ -26,6 +26,6 @@ struct RemoteImage<Placeholder: View>: View {
                 placeholder
             }
         }
-        .onAppear(perform: imageLoader.load)
+        .onAppear(perform: imageViewModel.load)
     }
 }
