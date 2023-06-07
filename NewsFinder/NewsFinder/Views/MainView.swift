@@ -13,8 +13,9 @@ struct MainView: View {
 
     private let filters = ["All", "Business", "Entertainment", "General", "Health", "Science", "Sports", "Technology"]
     
+    @State private var filtersPages: [String: Int] = ["All": 1, "Business": 1, "Entertainment": 1, "General": 1, "Health": 1, "Science": 1, "Sports": 1, "Technology": 1]
+    
     @State private var articles: [Article] = []
-    @State private var page = 1
     @State private var scrolledToEnd = false
     @State private var filter = "All"
     
@@ -104,7 +105,10 @@ struct MainView: View {
         }
         .onchange(value: scrolledToEnd) { _ in
             if scrolledToEnd {
-                page += 1
+                if var pages = filtersPages[filter] {
+                    pages += 1
+                    filtersPages[filter] = pages
+                }
                 loadNextPage()
                 scrolledToEnd.toggle()
             }
@@ -114,7 +118,6 @@ struct MainView: View {
     
     // MARK: - MainView Methods
     private func changeFilter() {
-        page = 1
         if filter == "All" {
             self.articles = Array(viewModel.allArticles.values.flatMap { $0 })
         } else if let articles = viewModel.allArticles[filter] {
@@ -122,26 +125,35 @@ struct MainView: View {
         }
     }
     private func loadArticles() {
-        viewModel.fetchArticles(page: page)
-        
+        viewModel.fetchArticles(page: 1)
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
             self.articles = Array(viewModel.allArticles.values.flatMap { $0 })
         }
-        
     }
-
     private func loadNextPage() {
-        if filter == "All" {
-            viewModel.fetchArticles(page: page)
-            self.articles.append(contentsOf: Array(viewModel.allArticles.values.flatMap { $0 }))
-        } else {
-            // load new page for the current filter only
-            viewModel.fetchNextPage(page: page, filter: filter)
-            
-            if let articles = viewModel.allArticles[filter] {
-                let range = self.articles.count - 1..<articles.count
-                self.articles.append(contentsOf: articles[range])
+        if let pageToLoad = filtersPages[filter] {
+            if filter == "All" {
+                viewModel.fetchArticles(page: pageToLoad)
                 
+                let allArticles = Array(viewModel.allArticles.values.flatMap { $0 })
+                let totalCount = allArticles.count
+                let oldCount = self.articles.count
+                
+                for article in allArticles[oldCount..<totalCount] {
+                    self.articles.append(article)
+                }
+            }
+            else {
+                viewModel.fetchNextPage(page: pageToLoad, filter: filter)
+                
+                if let articles = viewModel.allArticles[filter] {
+                    let totalCount = articles.count
+                    let oldCount = self.articles.count
+                    
+                    for article in articles[oldCount..<totalCount] {
+                        self.articles.append(article)
+                    }
+                }
             }
         }
     }

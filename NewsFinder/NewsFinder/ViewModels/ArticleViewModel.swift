@@ -16,9 +16,6 @@ class ArticleViewModel: ObservableObject {
     private let filters = ["Business", "Entertainment", "General", "Health", "Science", "Sports", "Technology"]
     
     func fetchArticles(page: Int) {
-        
-        self.allArticles.removeAll()
-        
         for filter in filters {
             articleLoader.fetchArticles(page: page, category: filter) { [weak self] result in
                 switch result {
@@ -44,7 +41,10 @@ class ArticleViewModel: ObservableObject {
                 print("Error: \(error)")
             }
         }
-
+    }
+    
+    func resetArticles() {
+        self.allArticles.removeAll()
     }
 }
 
